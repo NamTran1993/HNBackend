@@ -1,0 +1,2 @@
+z:\Coding\_LIB\_BackEndLib\TBackEndLib\TBackEndLib\obj\x64\Release\HNBackEnd.csprojAssemblyReference.cache
+z:\Coding\_LIB\_BackEndLib\TBackEndLib\TBackEndLib\obj\x64\Release\HNBackEnd.csproj.CoreCompileInputs.cache
