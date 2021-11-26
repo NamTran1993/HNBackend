@@ -8,5 +8,7 @@ namespace HNBackend.Module.TExcel
 {
     public class IExcel
     {
+        // Nam Them Local
+      
     }
 }
