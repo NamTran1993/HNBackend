@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ICSharpCode.SharpZipLib.Zip;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -263,6 +264,55 @@ namespace HNBackend.Global
                 res = null;
             }
             return res;
+        }
+
+        public static void ZipFolder(string pathFolder, string outputFile, int compressionLevel = 9)
+        {
+            try
+            {
+                string[] fileNames = Directory.GetFiles(pathFolder);
+                if (fileNames != null && fileNames.Length > 0)
+                {
+                    using (ZipOutputStream outputStream = new ZipOutputStream(File.Create(outputFile)))
+                    {
+                        outputStream.SetLevel(compressionLevel);
+                        byte[] buffer = new byte[4096];
+
+                        foreach (string file in fileNames)
+                        {
+                            ZipEntry entry = new ZipEntry(Path.GetFileName(file));
+                            entry.DateTime = DateTime.Now;
+                            outputStream.PutNextEntry(entry);
+                            using (FileStream fs = File.OpenRead(file))
+                            {
+                                int sourceBytes;
+                                do
+                                {
+                                    sourceBytes = fs.Read(buffer, 0, buffer.Length);
+                                    outputStream.Write(buffer, 0, sourceBytes);
+                                } while (sourceBytes > 0);
+
+                                fs.Close();
+                                fs.Dispose();
+                            }
+                        }
+
+                        outputStream.Finish();
+                        outputStream.Close();
+                        try
+                        {
+                            if (Directory.Exists(pathFolder))
+                                Directory.Delete(pathFolder, false);
+                        }
+                        catch (Exception ex)
+                        { }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
     }
