@@ -40,4 +40,11 @@ namespace HNBackend.Global
         RESUME,
         RUNNING
     }
+
+    public enum TCODE
+    {
+        NONE = -1,
+        OK = 1,
+        ERROR = 2
+    }
 }
