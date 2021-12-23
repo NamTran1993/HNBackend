@@ -140,6 +140,21 @@ namespace HNBackend.Module.TExtension
                 throw ex;
             }
         }
+
+        public static string TReadAllTextFile(this string pathFile)
+        {
+            try
+            {
+                if (pathFile.TIsExistFile())
+                    return File.ReadAllText(pathFile);
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region Image
