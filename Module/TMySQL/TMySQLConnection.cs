@@ -76,6 +76,26 @@ namespace HNBackend.Module.TMySQL
             }
         }
 
+        public static int TExeNoneQuery(string sqlQuery)
+        {
+            int res = 0;
+            try
+            {
+                if (_OdbcConn != null && _OdbcConn.State == System.Data.ConnectionState.Open)
+                {
+                    OdbcCommand odbcCommand = null;
+                    odbcCommand = new OdbcCommand(sqlQuery, _OdbcConn);
+                    res = odbcCommand.ExecuteNonQuery();
+                }
+
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         private void TConnectDatabase()
         {

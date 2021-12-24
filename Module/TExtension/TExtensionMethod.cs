@@ -28,6 +28,18 @@ namespace HNBackend.Module.TExtension
             }
         }
 
+        public static long TToLong(this string obj)
+        {
+            try
+            {
+                return long.Parse(obj.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public static string TToString(this int obj)
         {
