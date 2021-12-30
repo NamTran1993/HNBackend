@@ -47,4 +47,13 @@ namespace HNBackend.Global
         OK = 1,
         ERROR = 2
     }
+
+    public enum TENCODE
+    {
+        DES,
+        TDES,
+        RSA,
+        AES_256,
+        TWOFISH
+    }
 }

@@ -247,7 +247,7 @@ namespace HNBackend.Global
             return res;
         }
 
-        public static byte[] ConvertStringToByteArray(string hex)
+        public static byte[] ConvertStringToByteArray(string hex, int fromBase = 16)
         {
             byte[] res = null;
             try
@@ -256,7 +256,7 @@ namespace HNBackend.Global
                     return null;
                 return Enumerable.Range(0, hex.Length)
                     .Where(x => x % 2 == 0)
-                    .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                    .Select(x => Convert.ToByte(hex.Substring(x, 2), fromBase))
                     .ToArray();
             }
             catch (Exception ex)
@@ -265,6 +265,41 @@ namespace HNBackend.Global
             }
             return res;
         }
+
+        public static string ToHexString(string str)
+        {
+            var sb = new StringBuilder();
+
+            var bytes = Encoding.UTF32.GetBytes(str);
+            foreach (var t in bytes)
+            {
+                sb.Append(t.ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+
+        public static string FromHexString(string hexString)
+        {
+            var bytes = new byte[hexString.Length / 2];
+            for (var i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+            }
+
+            return Encoding.Unicode.GetString(bytes);
+        }
+
+        public static string BytesToHexString(byte[] bytes)
+        {
+            StringBuilder hexString = new StringBuilder(bytes.Length);
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                hexString.Append(bytes[i].ToString("X2"));
+            }
+            return hexString.ToString();
+        }
+
 
         public static void ZipFolder(string pathFolder, string outputFile, int compressionLevel = 9)
         {

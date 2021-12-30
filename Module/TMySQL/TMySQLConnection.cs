@@ -96,7 +96,6 @@ namespace HNBackend.Module.TMySQL
             }
         }
 
-
         private void TConnectDatabase()
         {
             try
