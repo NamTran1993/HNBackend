@@ -169,12 +169,12 @@ namespace HNBackend.Module.TEncode
 
                 byte[] byteHash = null;
                 byte[] byteBuff = null;
-                byte[] byteKey = Encoding.UTF8.GetBytes(passwordEndcode);
-
+                byte[] byteKey = Encoding.Unicode.GetBytes(passwordEndcode);
+             
                 byteHash = hashMD5Provider.ComputeHash(byteKey);
                 desCryptoProvider.Key = byteHash;
-                desCryptoProvider.Mode = CipherMode.CTS;
-                byteBuff = Encoding.UTF8.GetBytes(inputString);
+                desCryptoProvider.Mode = CipherMode.ECB;
+                byteBuff = Encoding.Unicode.GetBytes(inputString);
 
                 res = Convert.ToBase64String(desCryptoProvider.CreateEncryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
                 return res;
@@ -195,14 +195,14 @@ namespace HNBackend.Module.TEncode
 
                 byte[] byteHash = null;
                 byte[] byteBuff = null;
-                byte[] byteKey = Encoding.UTF8.GetBytes(passwordEndcode);
+                byte[] byteKey = Encoding.Unicode.GetBytes(passwordEndcode);
 
                 byteHash = hashMD5Provider.ComputeHash(byteKey);
                 desCryptoProvider.Key = byteHash;
-                desCryptoProvider.Mode = CipherMode.CTS;
+                desCryptoProvider.Mode = CipherMode.ECB;
                 byteBuff = Convert.FromBase64String(inputString);
 
-                res = Encoding.UTF8.GetString(desCryptoProvider.CreateDecryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
+                res = Encoding.Unicode.GetString(desCryptoProvider.CreateDecryptor().TransformFinalBlock(byteBuff, 0, byteBuff.Length));
                 return res;
             }
             catch (Exception ex)
