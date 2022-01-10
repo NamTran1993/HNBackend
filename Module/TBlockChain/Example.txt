@@ -1,0 +1,27 @@
+  List<TBlockChain> lstGiaoDich = new List<TBlockChain>();
+                string firstHash = TSHA256.THashSHA256("TRAN_HUY_NAM");
+
+                // ----- BLOCK _1
+                string data = "Giao Dich Chuyen Tien Toi Nguyen Van A.";
+                int none = 1;
+                TBlockChain blockChain_1 = new TBlockChain(firstHash, data, none);
+                lstGiaoDich.Add(blockChain_1);
+
+                // ----- BLOCK _2
+                string data_2 = "Tôi Nguyen Van A: Xác nhận đã nhận";
+                int none_2 = 2;
+                TBlockChain blockChain_2 = new TBlockChain(blockChain_1.Block.CurrentHash, data_2, none_2);
+                lstGiaoDich.Add(blockChain_2);
+
+
+                string bl_1 = blockChain_1.TObjectToJson();
+                string bl_2 = blockChain_2.TObjectToJson();
+
+
+                HNBackend.Global.TGlobal.Log(_LOG_FILE_BLOCK_CHAIN, "---Block 1", HNBackend.Global.TYPE_LOGGER.DEBUG);
+                HNBackend.Global.TGlobal.Log(_LOG_FILE_BLOCK_CHAIN, bl_1, HNBackend.Global.TYPE_LOGGER.DEBUG);
+
+                HNBackend.Global.TGlobal.Log(_LOG_FILE_BLOCK_CHAIN, "---Block 2", HNBackend.Global.TYPE_LOGGER.DEBUG);
+                HNBackend.Global.TGlobal.Log(_LOG_FILE_BLOCK_CHAIN, bl_2, HNBackend.Global.TYPE_LOGGER.DEBUG);
+
+                bool bIsBlock = lstGiaoDich.TIsChainValid();
