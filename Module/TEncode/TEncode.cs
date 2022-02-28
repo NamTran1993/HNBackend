@@ -12,6 +12,7 @@ namespace HNBackend.Module.TEncode
     public class TEncode
     {
         public static string _IV_KEY = TGlobal.BytesToHexString(Encoding.UTF8.GetBytes("!TranHuyNam12^^!"));
+        public static string _DEFAULT_KEY = "TranHuyNam321#@!";
 
         #region PUBLIC
         public static string Encode(string passwordEndcode, string inputString, TENCODE typeEncode)

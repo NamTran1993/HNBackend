@@ -14,6 +14,7 @@ namespace HNBackend.Module.TMySQL
     {
         public static TMySQLConnection _TMySQLConnection = null;
         public static OdbcConnection _OdbcConn = null;
+        public static string _KEY_ENCODE_PASS = string.Empty;
 
         private TMySQLConfig _mySQLConfig = null;
         private static string _pathConfig = string.Empty;
@@ -50,7 +51,11 @@ namespace HNBackend.Module.TMySQL
             try
             {
                 if (_OdbcConn != null && _OdbcConn.State == System.Data.ConnectionState.Open)
+                {
                     _OdbcConn.Close();
+                    _OdbcConn.Dispose();
+                    _TMySQLConnection = null;
+                }
             }
             catch (Exception ex)
             {
@@ -116,11 +121,15 @@ namespace HNBackend.Module.TMySQL
             {
                 _mySQLConfig = new TMySQLConfig();
 
+                if (!string.IsNullOrEmpty(_KEY_ENCODE_PASS))
+                    _mySQLConfig.Password = TEncode.TEncode.Decode(TEncode.TEncode._DEFAULT_KEY, TConfigINI.ReadConfig(_pathConfig, _SECTION, "password", ""), Global.TENCODE.AES_256);
+                else
+                    _mySQLConfig.Password = TConfigINI.ReadConfig(_pathConfig, _SECTION, "password", "");
+
                 _mySQLConfig.ServerName = TConfigINI.ReadConfig(_pathConfig, _SECTION, "servername", "");
                 _mySQLConfig.Dirver = TConfigINI.ReadConfig(_pathConfig, _SECTION, "driver", "");
                 _mySQLConfig.DatabaseName = TConfigINI.ReadConfig(_pathConfig, _SECTION, "databasename", "");
                 _mySQLConfig.UserName = TConfigINI.ReadConfig(_pathConfig, _SECTION, "username", "");
-                _mySQLConfig.Password = TConfigINI.ReadConfig(_pathConfig, _SECTION, "password", "");
                 _mySQLConfig.Port = TConfigINI.ReadConfig(_pathConfig, _SECTION, "port", "").TToInt32();
             }
             catch (Exception ex)
@@ -133,7 +142,7 @@ namespace HNBackend.Module.TMySQL
         {
             try
             {
-                if (_mySQLConfig != null)
+                if (_mySQLConfig != null || (_OdbcConn != null && _OdbcConn.State == ConnectionState.Closed))
                 {
                     string strConn = string.Format("Driver={0};Server={1};UID={2};PWD={3};DB={4};Port={5}",
                        _mySQLConfig.Dirver, _mySQLConfig.ServerName, _mySQLConfig.UserName, _mySQLConfig.Password, _mySQLConfig.DatabaseName, _mySQLConfig.Port);

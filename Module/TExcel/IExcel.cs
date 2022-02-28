@@ -27,9 +27,12 @@ namespace HNBackend.Module.TExcel
         public abstract byte[] ToBinary();
         public abstract void SetWidths(params double[] widths);
         public abstract void SetRowHeights(Dictionary<int, double> height);
+        public abstract void SetHeightRanges(int startRow, int startColumn, int endRow, int endColumn, int height);
         public abstract void SetWidthsColumns(int col, float width);
         public abstract void AddCollectionValueString(List<string> Collection, int fromRow, int fromCol, int toRow, int toCol, string style_name, bool is_merge, TExcelColor backgroundColor, TExcelBorder border, TExcelBorderPosition borderPosition = TExcelBorderPosition.Box, string formatNumber = "");
         public abstract void AddCollectionValueString(List<string> Collection, int fromRow, int fromCol, int toRow, int toCol, string style_name, bool is_merge, TExcelBorder border, TExcelBorderPosition borderPosition = TExcelBorderPosition.Box, string formatNumber = "");
         public abstract void AddCollectionValueInt(List<int> Collection, int fromRow, int fromCol, int toRow, int toCol, string style_name, bool is_merge, TExcelBorder border, TExcelBorderPosition borderPosition = TExcelBorderPosition.Box, string formatNumber = "");
+        public abstract void SetBackgroundColorRange(int startRow, int startColumn, int endRow, int endColumn);
+        public abstract void SetBorderStyle(int startRow, int startColumn, int endRow, int endColumn);
     }
 }

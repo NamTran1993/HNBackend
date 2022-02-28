@@ -458,6 +458,26 @@ namespace HNBackend.Module.TExcel
             }
         }
 
+        public override void SetHeightRanges(int startRow, int startColumn, int endRow, int endColumn, int height)
+        {
+            try
+            {
+                if (startRow <= endRow)
+                {
+                    int numberOfColors = TExcelStyle._ArrayColorODD_EVEN.Count;
+                    for (int row = startRow; row <= endRow; row++)
+                    {
+                        _worksheet.Row(row).Height = height;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public override void SetWidthsColumns(int col, float width)
         {
             try
@@ -534,6 +554,62 @@ namespace HNBackend.Module.TExcel
                 ExcelRange range = _worksheet.Cells[fromRow, toCol];
                 range.LoadFromCollection(Collection, false, OfficeOpenXml.Table.TableStyles.None).StyleName = style_name;
                 range.Merge = is_merge;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public override void SetBackgroundColorRange(int startRow, int startColumn, int endRow, int endColumn)
+        {
+            try
+            {
+                if (startRow <= endRow)
+                {
+                    int numberOfColors = TExcelStyle._ArrayColorODD_EVEN.Count;
+                    for (int row = startRow; row <= endRow; row++)
+                    {
+                        using (OfficeOpenXml.ExcelRange range = _worksheet.Cells[row, startColumn, row, endColumn])
+                        {
+                            range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            range.Style.Fill.BackgroundColor.SetColor(TExcelStyle._ArrayColorODD_EVEN[(row - startRow) % numberOfColors]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public override void SetBorderStyle(int startRow, int startColumn, int endRow, int endColumn)
+        {
+            try
+            {
+                if (startRow <= endRow)
+                {
+                    int numberOfColors = TExcelStyle._ArrayStyleBorder.Count;
+                    for (int row = startRow; row <= endRow; row++)
+                    {
+                        using (OfficeOpenXml.ExcelRange range = _worksheet.Cells[row, startColumn, row, endColumn])
+                        {
+                            range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            range.Style.Border.BorderAround(TExcelStyle._ArrayStyleBorder[(row - startRow) % numberOfColors], Color.Black);
+                        }
+                    }
+
+                    for (int col = startColumn; col <= endColumn; col++)
+                    {
+                        using (OfficeOpenXml.ExcelRange range = _worksheet.Cells[startRow, col, endRow, col])
+                        {
+                            range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            range.Style.Border.BorderAround(TExcelStyle._ArrayStyleBorder[(col - startColumn) % numberOfColors], Color.Black);
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

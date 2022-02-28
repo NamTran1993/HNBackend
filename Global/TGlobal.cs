@@ -1,5 +1,6 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -151,6 +152,9 @@ namespace HNBackend.Global
                             break;
                         case TGUID.DEFAULT_4:
                             guid_result = string.Format("{0}-{1}", arrGuid[0], arrGuid[4]);
+                            break;
+                        case TGUID.FULL:
+                            guid_result = guid;
                             break;
                         default:
                             guid_result = string.Format("{0}-{1}", arrGuid[0], arrGuid[1]);
@@ -348,6 +352,32 @@ namespace HNBackend.Global
             {
                 throw ex;
             }
+        }
+
+
+        public static int GetIntFromBitArray(BitArray bitArray)
+        {
+            try
+            {
+                if (bitArray.Length > 32)
+                    throw new ArgumentException("Argument length shall be at most 32 bits.");
+
+                int[] array = new int[1];
+                bitArray.CopyTo(array, 0);
+                return array[0];
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool[] ToBits(int input, int numberOfBits)
+        {
+            return Enumerable.Range(0, numberOfBits)
+            .Select(bitIndex => 1 << bitIndex)
+            .Select(bitMask => (input & bitMask) == bitMask)
+            .ToArray();
         }
         #endregion
     }

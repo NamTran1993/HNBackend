@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
@@ -77,7 +78,6 @@ namespace HNBackend.Module.TExtension
                 throw ex;
             }
         }
-
         #endregion
 
         #region Setting

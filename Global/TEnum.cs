@@ -28,7 +28,8 @@ namespace HNBackend.Global
         DEFAULT_3,
         DEFAULT_4,
         DATE,
-        TIME
+        TIME,
+        FULL
     }
 
     public enum TTHREAD

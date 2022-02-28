@@ -75,9 +75,9 @@ namespace HNBackend.Module.TMail
             try
             {
                 _smtp = new SmtpClient(_tMail.HostMail, _tMail.Port);
-                _smtp.EnableSsl = true;
+                _smtp.EnableSsl = _tMail.EnableSsl;
                 _smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                _smtp.UseDefaultCredentials = false;
+                _smtp.UseDefaultCredentials = true;
                 _smtp.Credentials = new NetworkCredential(_tMail.Email, _tMail.Password);
             }
             catch (Exception ex)
