@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -378,6 +379,37 @@ namespace HNBackend.Global
             .Select(bitIndex => 1 << bitIndex)
             .Select(bitMask => (input & bitMask) == bitMask)
             .ToArray();
+        }
+
+        public static string GetSubString(string input, int len)
+        {
+            string res = string.Empty;
+            try
+            {
+                if (!string.IsNullOrEmpty(input) && len > 0)
+                    res = input.Substring(0, len);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region Setting
+        public static string TAppSettings(string key)
+        {
+            try
+            {
+                if (ConfigurationManager.AppSettings[key] != null)
+                    return ConfigurationManager.AppSettings[key];
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
     }

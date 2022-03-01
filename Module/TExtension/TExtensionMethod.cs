@@ -80,20 +80,6 @@ namespace HNBackend.Module.TExtension
         }
         #endregion
 
-        #region Setting
-        public static string TAppSettings(this string text, string key)
-        {
-            try
-            {
-                return ConfigurationManager.AppSettings[key];
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        #endregion
-
         #region JSON
         public static string TObjectToJson(this object obj)
         {
@@ -138,6 +124,54 @@ namespace HNBackend.Module.TExtension
                 throw ex;
             }
         }
+
+        public static string TFileReadAllText(this string pathFile)
+        {
+            string res = string.Empty;
+            try
+            {
+                if (!pathFile.TIsExistFile())
+                    throw new Exception("File not exist!");
+
+                res = File.ReadAllText(pathFile);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool TFileWriteAllText(this string pathFile, string content)
+        {
+            try
+            {
+                File.WriteAllText(pathFile, content);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool TFileDelete(this string pathFile)
+        {
+            try
+            {
+                if (!pathFile.TIsExistFile())
+                {
+                    File.Delete(pathFile);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public static bool TIsExistFolder(this string pathFolder)
         {

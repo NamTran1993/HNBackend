@@ -21,5 +21,6 @@ namespace HNBackend.Module.TMail
         public List<string> ArrayToEmail { get; set; }
         public List<string> ArrayCCEmail { get; set; }
         public MailPriority MailPriority { get; set; } = MailPriority.Low;
+        public bool IsUseDefaultCredentials { get; set; } = true;
     }
 }
