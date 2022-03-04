@@ -172,6 +172,18 @@ namespace HNBackend.Module.TExtension
             }
         }
 
+        public static void TFileRename(this FileInfo fileInfo, string newName)
+        {
+            try
+            {
+                fileInfo.MoveTo(fileInfo.Directory.FullName + "\\" + newName);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public static bool TIsExistFolder(this string pathFolder)
         {

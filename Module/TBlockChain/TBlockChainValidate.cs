@@ -20,10 +20,20 @@ namespace HNBackend.Module.TBlockChain
 
                 for (int i = 1; i < lstBlockChain.Count; i++)
                 {
-                    curBlock = lstBlockChain.ElementAt(i).Block;
-                    preBlock = lstBlockChain.ElementAt(i - 1).Block;
+                    TBlockChain tCurrent = lstBlockChain.ElementAt(i);
+                    TBlockChain tPre = lstBlockChain.ElementAt(i - 1);
 
-                    if (!preBlock.CurrentHash.Equals(curBlock.PreHash))
+                    curBlock = tCurrent.Block;
+                    preBlock = tPre.Block;
+
+                    // ----
+                    if(!curBlock.DataHash.Equals(tCurrent.Hash_Block))
+                        return false;
+
+                    if (!preBlock.DataHash.Equals(tPre.Hash_Block))
+                        return false;
+
+                    if (!curBlock.PreHash.Equals(preBlock.DataHash))
                         return false;
                 }
                 return true;

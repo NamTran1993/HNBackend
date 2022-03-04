@@ -8,7 +8,7 @@ namespace HNBackend.Module.TBlockChain
 {
     public class TBlock
     {
-        public string CurrentHash { get; set; }
+        public string DataHash { get; set; }
         public object Data { get; set; }
         public string PreHash { get; set; }
         public long TimeSpan { get; set; }
