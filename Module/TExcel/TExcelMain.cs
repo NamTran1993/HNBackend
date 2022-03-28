@@ -179,7 +179,7 @@ namespace HNBackend.Module.TExcel
                     else if (backgroundColor == TExcelColor.Gray91)
                         _range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(0, 217, 230, 246));
                     else if (backgroundColor == TExcelColor.ColorHeaderTable)
-                        _range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(0, 68, 114, 196));
+                        _range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(0, 17, 37, 56));
                     else
                         _range.Style.Fill.BackgroundColor.SetColor(backgroundColor.ToColor());
                 }

@@ -66,11 +66,12 @@ namespace HNBackend.Module.TLanguage
                         }
                     }
                 }
+                return mapping;
             }
             catch (Exception ex)
             {
-            }
-            return mapping;
+                throw ex;
+            }       
         }
 
         public string GetValue(string sectionName, string entryName, string defaultValue)

@@ -213,6 +213,20 @@ namespace HNBackend.Module.TExtension
             }
         }
 
+
+        public static bool TCreateFolder(this string pathFolder)
+        {
+            try
+            {
+                Directory.CreateDirectory(pathFolder);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region Image
@@ -312,6 +326,20 @@ namespace HNBackend.Module.TExtension
                 if (codecs[i].MimeType == mimeType)
                     return codecs[i];
             return null;
+        }
+        #endregion
+
+        #region Distinct
+        public static IEnumerable<T> TDistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
+        {
+            try
+            {
+                return items.GroupBy(property).Select(x => x.First());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
     }
